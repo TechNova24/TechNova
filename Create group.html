@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Management</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #ffafbd, #ffc3a0);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        /* Container Styling */
+        .group-container {
+            background: #fff;
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .group-container:hover {
+            transform: translateY(-10px);
+        }
+
+        .group-container h2 {
+            margin-bottom: 20px;
+            font-size: 26px;
+            color: #444;
+            font-weight: 600;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .form-group input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group input[type="text"]:focus {
+            border-color: #ff7a59;
+            outline: none;
+            box-shadow: 0 4px 10px rgba(255, 122, 89, 0.2);
+        }
+
+        /* Button Styling */
+        button {
+            background: linear-gradient(to right, #ff7a59, #ff9e59);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #e56748, #ff7a59);
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* Generated Link Section */
+        #generatedLink {
+            background: #f9f9f9;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 15px;
+            display: none; /* Hidden by default */
+        }
+
+        #generatedLink strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        #generatedLink p {
+            font-size: 14px;
+            margin: 0;
+            word-break: break-word;
+        }
+
+        #generatedLink a {
+            color: #ff7a59;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        #generatedLink a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <!-- Create Group Section -->
+    <div class="group-container" id="createGroupSection">
+        <h2>Create or Join a Group</h2>
+        
+        <!-- Input for Group Name -->
+        <div class="form-group">
+            <label for="groupName">Group Name:</label>
+            <input type="text" id="groupName" placeholder="Enter group name (for leader only)">
+        </div>
+        <div class="form-group">
+            <button id="createGroupBtn">Create Group</button>
+        </div>
+        
+        <!-- Display Generated Link -->
+        <div class="form-group" id="generatedLink">
+            <strong>Share this Group Link:</strong>
+            <p id="groupLinkText"></p>
+        </div>
+        
+        <!-- Input for Joining a Group -->
+        <div class="form-group">
+            <label for="groupLink">Paste Group Link:</label>
+            <input type="text" id="groupLink" placeholder="Paste link to join">
+        </div>
+        <div class="form-group">
+            <button id="joinGroupBtn">Join Group</button>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const createGroupBtn = document.getElementById("createGroupBtn");
+            const generatedLinkSection = document.getElementById("generatedLink");
+            const groupLinkText = document.getElementById("groupLinkText");
+            const joinGroupBtn = document.getElementById("joinGroupBtn");
+
+            // Handle "Create Group" button click
+            createGroupBtn.addEventListener("click", () => {
+                const groupName = document.getElementById("groupName").value.trim();
+
+                // Validate group name
+                if (groupName) {
+                    // Generate unique group link
+                    const sanitizedGroupName = groupName.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+                    const uniqueId = Math.random().toString(36).substr(2, 9); // Generate a random ID
+                    const groupLink = `https://group-management.GatherUp.com/join/${sanitizedGroupName}-${uniqueId}`;
+
+                    // Display the generated link
+                    groupLinkText.textContent = groupLink;
+                    groupLinkText.href = groupLink;
+                    generatedLinkSection.style.display = "block";
+                } else {
+                    alert("Please enter a group name to create a group.");
+                }
+            });
+
+            // Handle "Join Group" button click
+            joinGroupBtn.addEventListener("click", () => {
+                const groupLink = document.getElementById("groupLink").value.trim();
+                
+                if (groupLink) {
+                    // Redirect to the "Propose Date" page if a link is provided
+                    window.location.href = "Propose Dates.html";
+                } else {
+                    alert("Please paste a valid group link before joining.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

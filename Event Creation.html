@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Event</title>
+</head>
+<body>
+  <section id="create-event">
+    <h1>Create an Event</h1>
+    <form id="event-form">
+      <label for="group-name">Group Name:</label>
+      <input type="text" id="group-name" placeholder="Enter your group name" required>
+
+      <label for="event-name">Event Name:</label>
+      <input type="text" id="event-name" placeholder="Enter your event name" required>
+
+      <label for="meeting-date">Meeting Date:</label>
+      <input type="date" id="meeting-date" required>
+
+      <button type="submit">Save Event</button>
+    </form>
+  </section>
+
+  <script>
+    document.getElementById("event-form").addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      // Collect user inputs
+      const groupName = document.getElementById("group-name").value.trim();
+      const eventName = document.getElementById("event-name").value.trim();
+      const meetingDate = document.getElementById("meeting-date").value;
+
+      // Save to localStorage
+      localStorage.setItem("groupName", groupName);
+      localStorage.setItem("eventName", eventName);
+      localStorage.setItem("meetingDate", meetingDate);
+
+      // Redirect to the Event Page
+      window.location.href = "Event page.html";
+    });
+  </script>
+</body>
+</html>

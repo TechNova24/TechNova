@@ -1,0 +1,338 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Times New Roman', Times, serif, sans-serif;
+    background-color: #f2e0d4;
+    background-position: center;
+    background-size: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -10px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    max-width: 3000px;
+    height: 75px;
+    margin: 0;
+    padding: 10px 20px;
+    background-color: #ccb5b5;
+    background-color: transparent;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    margin-top: -320px;
+    margin-left: -200px;
+    font-size: 18px;
+}
+
+.navbar .logo-text {
+    font-size: 70px;
+    color: #362200;
+    font-weight: bold;
+    margin-top: -350px;
+    margin-left: -1300px;
+    
+}
+
+.menu {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.menu ul {
+    display: flex;
+    gap: 50px;
+    list-style: none;
+}
+
+.menu ul li a {
+    text-decoration: none;
+    color: #362200;
+    font-family: 'Times New Roman', Times, serif, sans-serif;
+    font-weight: bold;
+    transition: color 0.4s ease-in-out;
+}
+
+.menu ul li a:hover {
+    color: #362200;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    margin-left: 15px;
+}
+
+.srch {
+    padding: 10px;
+    border: 1px solid#362200;
+    border-radius: 2px;
+    margin-right: 5px;
+}
+
+.btn {
+    padding: 5px 10px;
+    margin-left: 5px;
+    background-color: #362200;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #362200;
+}
+
+.center-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+}
+
+.background-app-name {
+    text-align: center;
+    color: #362200;
+    margin-bottom: 20px; 
+}
+
+.background-app-name h1 {
+    font-size: 70px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.background-app-name p {
+    font-size: 24px;
+    margin: 0;
+}
+
+.login-container {
+    width: 300px;
+    padding: 20px;
+    background-color: rgb(226, 207, 174);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    text-align: center;
+}
+
+.login-container h2 {
+    margin-bottom: 20px;
+    color: #362200;
+}
+
+.login-container label {
+    display: block;
+    text-align: left;
+    margin: 10px 0 5px;
+    color: #362200;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 4px;
+    color: #362200;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #362200;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #e9c29a;
+}
+
+@media (max-width: 600px) {
+    .navbar, .login-container, .center-wrapper {
+        flex-direction: column;
+        padding: 10px;
+    }
+    .navbar .logo-text {
+        font-size: 18px;
+    }
+    .background-app-name h1 {
+        font-size: 40px;
+    }
+}
+
+
+/*dashboard*/
+ 
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;  /* Align items at the top */
+    align-items: center;  /* Center horizontally */
+    font-family: 'Times New Roman', Times, serif, sans-serif;  /* Add a simple font family */
+    margin: 0;
+    font-style: italic;
+}
+
+/* the heading (h1) */
+h1 {
+    text-align: center;  /* Center the text */
+    font-size: 4em;
+    margin-top: 50px;  /* Space from the top */
+    font-style: italic;
+}
+
+/* welcome message */
+#welcomeMessage {
+    text-align: center;  /* Center the text */
+    font-size: 1.5em;
+    color: #491c00;  /* Dark text color */
+    margin-top: 40px;  /* Space below the h1 */
+    font-style: italic;
+}
+
+
+
+/*get started*/
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Times New Roman', Times, serif;
+    background-color: #f5e6d3; /* Light beige background */
+    background-color: transparent;
+}
+
+.header {
+    position: relative;
+    height: 100vh; /* Full screen height */
+}
+
+.text-top-left {
+    position: absolute;
+    top: 10px; /* Keeps the text's vertical position */
+    left: -700px; /* Keeps the text's horizontal position */
+    font-size: 70px;
+    font-weight: bold;
+    color: rgb(115, 75, 6);
+}
+
+.icon {
+    position: fixed; /* Ensures the image stays at the top-left corner */
+    top: 10px; /* Fixed position near the top */
+    left: 10px; /* Fixed position near the left */
+    width: 100px; /* Adjust logo size */
+    height: auto;
+}
+
+.logo-image {
+    width: 200%; /* Ensures it fits the container */
+    height: auto; /* Maintains aspect ratio */
+    left: 200px;
+}
+
+.main {
+    position: absolute; /* Allows precise placement relative to the viewport */
+    top: 50%; /* Moves the container halfway down the page */
+    left: 50%; /* Moves the container halfway across the page */
+    transform: translate(-50%, -50%); /* Centers the content exactly */
+    text-align: center;
+    background-color: transparent; /* Keeps the background clear */
+}
+
+
+.center-content {
+    display: flex;
+    flex-direction: column; /* Ensures the logo is stacked above the text */
+    align-items: center; /* Centers both image and text horizontally */
+}
+
+.center-logo {
+    width: 200px; /* Adjust the size of the logo */
+    height: auto; /* Maintain the aspect ratio */
+    margin-bottom: 20px; /* Add space between the logo and the text */
+    margin-top: -100px;
+}
+
+.center-text {
+    font-size: 25px; /* Adjust font size */
+    font-weight: bold;
+    color: rgb(115, 75, 6);
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+   white-space: nowrap;
+   font-style: italic;
+
+}
+
+
+.get-started-btn {
+    margin-top: 20px; /* Adds space between text and button */
+    padding: 10px 20px; /* Adjusts button size */
+    font-size: 18px; /* Button text size */
+    font-weight: bold;
+    color: #f1f1f0; /* White text color */
+    background-color: #734b06; /* Button color */
+    border: none; /* Removes default border */
+    border-radius: 5px; /* Rounds the corners */
+    cursor: pointer; /* Adds pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth color transition */
+}
+
+.get-started-btn:hover {
+    background-color: #fac25b; /* Changes color on hover */
+}
+
+
+#profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f5e4c7;
+    background-color: transparent;
+  }
+  
+  label {
+    font-weight: bold;
+  }
+  
+  input, select, button {
+    padding: 10px;
+    border: 1px solid #811c00;
+    border-radius: 4px;
+  }
+  
+  button {
+    background-color: #f1a563;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #dec09f;
+  }
+  

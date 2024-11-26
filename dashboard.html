@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GatherUp Web Application</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            font-style: italic;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5e4c7;
+            background-repeat: repeat;
+            background-size: cover;
+            background-position:center;
+            background-attachment: fixed;
+        }
+
+        /* Welcome section */
+        .welcome-container {
+
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            padding: 10px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 6px rgb(97, 37, 2);
+            margin-top: 50px;
+            z-index: 1;
+            position: relative;
+            background-image: url(PINK\ FLOWER\ \(1\).jpeg);
+        }
+
+        h1 {
+            font-size: 2em;
+            color: rgb(97, 37, 2);
+            margin-top: 30px;
+        }
+
+        #welcomeMessage {
+            text-align: center;
+            font-size: 1.5em;
+            color: rgb(97, 37, 2);
+            margin-top: 40px;
+        }
+
+        /* Calendar Container */
+        .calendar-container {
+            width: 100%;
+            max-width: 360px;
+            margin-top: 10px;
+            margin-left: -70px;
+            background-image: url(Free\ Vector\ _\ Spring\ background.jpeg);
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgb(97, 37, 2);
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #6d2602;
+            font-weight: bold;
+            
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            text-align: center;
+            font-weight: bold;
+            color: #612d00;
+        }
+
+        .calendar-days div {
+            padding: 5px;
+            background-color: rgba(247, 244, 242, 0.697);
+            border-radius: 5px;
+            display: flex; /* Ensures child elements (e.g., text) are positioned properly */
+            justify-content: center; /* Horizontally centers the text */
+            align-items: center; /* Vertically centers the text */
+            height: 40px; /* Makes boxes more consistent in height */
+            width: 40px; /* Ensures consistent width */
+            margin: 0 auto; /* Centers the box in its column */
+            box-sizing: border-box; /* Includes padding in width/height calculations */
+}
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .calendar-grid div {
+            padding: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 40px; /* Matches the size of the days in the header */
+            width: 40px;
+            background-color: transparent;
+            margin: 0 auto; /* Centers each date box in its cell */
+            box-sizing: border-box;
+}
+
+        .calendar-grid div:hover {
+            background-color: rgb(255, 225, 186);
+        }
+
+        .calendar-grid .empty {
+            background-color: transparent;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #402800;
+            color: rgb(239, 214, 202);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .submit-btn:hover {
+            background-color: #5f3300;
+        }
+
+        /* Responsiveness for mobile devices */
+        @media (max-width: 480px) {
+            .calendar-container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Welcome Section -->
+    <div class="welcome-container">
+        <h1>Welcome to TechNova</h1>
+        <div id="welcomeMessage"></div>
+        
+        
+    </div class='Choose Date'>
+    <h1>Mark your available date!</h1>
+    
+
+    <div style="display: flex; justify-content: center; align-items: flex-start; gap: 20px; margin-top: 20px;">
+        <!-- Calendar Section -->
+        <div class="calendar-container">
+            <div class="calendar-header">
+                <span id="monthYear"></span>
+                <button id="prevMonth">&#60;</button>
+                <button id="nextMonth">&#62;</button>
+            </div>
+            <div class="calendar-days">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+            </div>
+            <div class="calendar-grid" id="calendarGrid"></div>
+        </div>
+    
+    
+
+    <!-- Submit Button -->
+    <button id="submitBtn" class="submit-btn" style="display: none;">Submit</button>
+
+    <script>
+        const username = localStorage.getItem('username');
+        if (!username) {
+            alert("No username found in localStorage. Redirecting to the login page.");
+            window.location.href = 'index.html'; // Redirect to the login page if no username is found
+        } else {
+            document.getElementById('welcomeMessage').innerText = `Nice to see you, ${username}!`;
+        }
+
+        const monthYearElement = document.getElementById('monthYear');
+        const calendarGrid = document.getElementById('calendarGrid');
+        const prevMonthBtn = document.getElementById('prevMonth');
+        const nextMonthBtn = document.getElementById('nextMonth');
+        const submitBtn = document.getElementById('submitBtn');
+
+        let currentDate = new Date();
+        let currentMonth = currentDate.getMonth();
+        let currentYear = currentDate.getFullYear();
+        let selectedDate = localStorage.getItem('userDate'); // Retrieve saved date from localStorage
+
+        function renderCalendar(month, year) {
+            monthYearElement.innerText = `${getMonthName(month)} ${year}`;
+            calendarGrid.innerHTML = ''; // Clear previous calendar
+
+            const firstDay = new Date(year, month).getDay(); // First day of the month
+            const daysInMonth = new Date(year, month + 1, 0).getDate(); // Total days in the month
+
+            // Empty slots before the first day of the month
+            for (let i = 0; i < firstDay; i++) {
+                const emptyCell = document.createElement('div');
+                emptyCell.classList.add('empty');
+                calendarGrid.appendChild(emptyCell);
+            }
+
+            // Create the actual day cells
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayCell = document.createElement('div');
+                dayCell.innerText = day;
+                dayCell.classList.add('day');
+                dayCell.addEventListener('click', () => selectDate(day));
+
+                // Check if this date is the selected date
+                if (selectedDate && selectedDate === `${year}-${month + 1}-${day}`) {
+                    dayCell.style.backgroundColor = '#28a745'; // Highlight the selected date
+                }
+
+                calendarGrid.appendChild(dayCell);
+            }
+        }
+
+        function selectDate(day) {
+            const dateKey = `${currentYear}-${currentMonth + 1}-${day}`;
+            localStorage.setItem('userDate', dateKey); // Store selected date
+            selectedDate = dateKey; // Update selected date in the current session
+            renderCalendar(currentMonth, currentYear); // Re-render calendar to highlight the new selected date
+            submitBtn.style.display = 'block'; // Show the submit button
+        }
+
+        function submitDate() {
+    const username = localStorage.getItem('username');
+    if (username && selectedDate) {
+        localStorage.setItem(`${username}-date`, selectedDate); // Store date with username prefix
+        alert(`Date selected: ${selectedDate}`);
+        window.location.href = 'Create group.html'; // Redirect to confirmation page
+    } else {
+        alert("Username or date not found. Please try again.");
+        window.location.href = 'index.html'; // Redirect to login if username or date is missing
+    }
+}
+
+
+
+
+        
+        function getMonthName(monthIndex) {
+            const months = [
+                'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'
+            ];
+            return months[monthIndex];
+        }
+
+        
+        prevMonthBtn.addEventListener('click', () => {
+            if (currentMonth === 0) {
+                currentMonth = 11;
+                currentYear--;
+            } else {
+                currentMonth--;
+            }
+            renderCalendar(currentMonth, currentYear);
+        });
+
+        nextMonthBtn.addEventListener('click', () => {
+            if (currentMonth === 11) {
+                currentMonth = 0;
+                currentYear++;
+            } else {
+                currentMonth++;
+            }
+            renderCalendar(currentMonth, currentYear);
+        });
+
+        // Event listener for the submit button
+        submitBtn.addEventListener('click', submitDate);
+
+        // Initial render of the calendar
+        renderCalendar(currentMonth, currentYear);
+    </script>
+</body>
+</html>
+
+
+
+
+ <!-- Notes Box -->
+ <div class="notes-container" style="width: 200px;">
+    <h3 style="text-align: center; color: rgb(97, 37, 2);">Notes</h3>
+    <textarea id="notesBox" rows="15" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid #402800; box-shadow: 0px 4px 6px rgb(97, 37, 2);"></textarea>
+    <button id="saveNotesBtn" class="submit-btn" style="margin-top: 10px; width: 100%;">Save Notes</button>
+</div>
+</div>
+
+<script>
+// Save Notes Functionality
+const saveNotesBtn = document.getElementById('saveNotesBtn');
+const notesBox = document.getElementById('notesBox');
+
+// Load saved notes on page load
+const savedNotesKey = `${username}-notes`;
+notesBox.value = localStorage.getItem(savedNotesKey) || "";
+
+saveNotesBtn.addEventListener('click', () => {
+    const notes = notesBox.value;
+    localStorage.setItem(savedNotesKey, notes); // Save notes with username prefix
+    alert("Notes saved successfully!");
+
+    // Redirect to the next page (check file path)
+    window.location.href = 'Create group.html';  // Make sure this path is correct
+});
+</script>

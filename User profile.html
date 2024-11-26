@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            margin: 0;
+            padding: 0;
+            background: #ffe3c0;
+            color: #1b0f01;
+        }
+
+        /* Container Styles */
+        .profile-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .profile-container h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #0056b3;
+        }
+
+        /* Profile Picture Section */
+        #profile-pic-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-top: 10px;
+            border: 4px solid #f7c689;
+            display: none;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin: 15px 0 5px;
+            color: #0056b3;
+        }
+
+        input[type="file"], input[type="email"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #f7c689;
+            border-radius: 8px;
+            outline: none;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #f7c689;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color:#f7c689;
+        }
+
+        /* Voting Results Section */
+        .voting-results {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .voting-results .result {
+            background-color: #f7c689;
+            border: 1px solid #f7c689;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .voting-results .result strong {
+            color: #f7c689;
+        }
+
+        /* Reminder Section */
+        #reminderStatus {
+            margin-top: 15px;
+            color: #f7c689;
+            font-weight: bold;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .profile-container {
+                padding: 15px;
+            }
+
+            #profile-pic-preview {
+                width: 100px;
+                height: 100px;
+            }
+
+            h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-container">
+        <h2>User Profile</h2>
+
+        <!-- Display Username -->
+        <div>
+            <label>Username</label>
+            <p id="usernameDisplay" style="font-size: 18px; font-weight: bold;"></p>
+        </div>
+
+        <!-- Profile Picture Section -->
+        <div>
+            <img id="profile-pic-preview" alt="Profile Preview">
+            <label for="uploadPic">Upload Profile Picture</label>
+            <input type="file" id="uploadPic" accept="image/*">
+        </div>
+
+        <!-- Voting Results -->
+        <h3 style="margin-top: 30px;">Voting Results</h3>
+        <div id="votingResults" class="voting-results">
+            <!-- Dynamic content added via JavaScript -->
+        </div>
+
+        <!-- Email Reminder Section -->
+        <div>
+            <label for="emailInput">Set Email Reminder</label>
+            <input type="email" id="emailInput" placeholder="Enter your email">
+            <button id="reminderBtn">Set Reminder</button>
+        </div>
+        <div id="reminderStatus"></div>
+    </div>
+
+    <script>
+        // Retrieve and display username from localStorage
+        const username = localStorage.getItem("username");
+        if (!username) {
+            window.location.href = "login.html"; // Redirect if username not found
+        }
+        document.getElementById("usernameDisplay").textContent = username;
+
+        // Load and display profile picture
+        const profilePic = localStorage.getItem("profilePic");
+        const profilePicPreview = document.getElementById("profile-pic-preview");
+        if (profilePic) {
+            profilePicPreview.src = profilePic;
+            profilePicPreview.style.display = "block";
+        }
+
+        // Load and display voting results
+        const votingResults = JSON.parse(localStorage.getItem("votingResults")) || [];
+        const resultsContainer = document.getElementById("votingResults");
+        if (votingResults.length === 0) {
+            resultsContainer.textContent = "No voting results available.";
+        } else {
+            votingResults.forEach(({ date, votes, voters }) => {
+                const resultDiv = document.createElement("div");
+                resultDiv.classList.add("result");
+                resultDiv.innerHTML = `<strong>${date}:</strong> ${votes} votes<br>Voters: ${voters.join(", ")}`;
+                resultsContainer.appendChild(resultDiv);
+            });
+        }
+
+        // Upload and save profile picture
+        document.getElementById("uploadPic").addEventListener("change", function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    localStorage.setItem("profilePic", e.target.result);
+                    profilePicPreview.src = e.target.result;
+                    profilePicPreview.style.display = "block";
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Email reminder functionality
+        document.getElementById("reminderBtn").addEventListener("click", () => {
+            const email = document.getElementById("emailInput").value.trim();
+            if (email) {
+                const reminderDate = new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toDateString();
+                const message = `A reminder will be sent to ${email} for the outing on ${reminderDate}.`;
+                document.getElementById("reminderStatus").textContent = message;
+            } else {
+                alert("Please enter a valid email.");
+            }
+        });
+    </script>
+
+</body>
+</html>

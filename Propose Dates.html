@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propose Dates</title>
+    <style>
+        /* Simple & Clean Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #ffafbd, #ffc3a0);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        /* Date input styling */
+        #dateInput {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #fff;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        /* On focus, remove shadow, but keep the border color smooth */
+        #dateInput:focus {
+            outline: none;
+            border-color: #ff7a59;
+        }
+
+        button {
+            background: linear-gradient(to right, #ff7a59, #ff9e59);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #e56748, #ff7a59);
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Vote for the Best Outing Date</h2>
+
+    <!-- Date input field and Submit Vote button -->
+    <div class="form-group">
+        <label for="dateInput">Select Date:</label>
+        <input type="date" id="dateInput">
+    </div>
+    <div class="form-group">
+        <button id="submitVoteBtn" type="button">Submit Vote</button>
+    </div>
+
+    <script>
+        // Sample groupData structure (stored in localStorage)
+        let groupData = JSON.parse(localStorage.getItem("groupData")) || { dates: [] };
+
+        // Function to handle date submission and redirect after voting
+        document.getElementById("submitVoteBtn").addEventListener("click", () => {
+            const dateInput = document.getElementById("dateInput").value;
+
+            if (dateInput) {
+                // Add the new date with 0 votes initially
+                groupData.dates.push({ date: dateInput, votes: 0, voters: [] });
+
+                // Store the updated group data in localStorage
+                localStorage.setItem("groupData", JSON.stringify(groupData));
+
+                // Prompt for the username to vote
+                const username = prompt("Enter your username to vote:");
+
+                if (username) {
+                    // Add the username to the list of voters for the selected date
+                    const latestDate = groupData.dates[groupData.dates.length - 1];
+                    latestDate.voters.push(username);
+                    latestDate.votes++;
+
+                    // Save the updated group data in localStorage
+                    localStorage.setItem("groupData", JSON.stringify(groupData));
+
+                    // Redirect to User Profile page after voting
+                    window.location.href = "User profile.html"; // Change this to the correct URL for your profile page
+                } else {
+                    alert("Please enter a valid username to vote.");
+                }
+            } else {
+                alert("Please select a valid date.");
+            }
+        });
+    </script>
+
+</body>
+</html>

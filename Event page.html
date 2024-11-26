@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Page</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Event Page Styling */
+  #event-page {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f5e4c7;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  h1, h2 {
+    text-align: center;
+    color: #444;
+  }
+  
+  div {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input, textarea, button {
+    font-size: 14px;
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  textarea {
+    resize: none;
+  }
+  
+  button {
+    background-color: #ffd79c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+  }
+  
+
+  </style>
+</head>
+<body>
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event Page</title>
+</head>
+<body>
+  <section id="event-page">
+    <h1>Event Details</h1>
+
+    <div id="event-info">
+      <p><strong>Group Name:</strong> <span id="group-name-display">---</span></p>
+      <p><strong>Event Name:</strong> <span id="event-name-display">---</span></p>
+      <p><strong>Meeting Date:</strong> <span id="meeting-date-display">---</span></p>
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Retrieve data from localStorage
+      const groupName = localStorage.getItem("groupName");
+      const eventName = localStorage.getItem("eventName");
+      const meetingDate = localStorage.getItem("meetingDate");
+
+      // Display the data
+      document.getElementById("group-name-display").textContent = groupName || "No group name provided";
+      document.getElementById("event-name-display").textContent = eventName || "No event name provided";
+      document.getElementById("meeting-date-display").textContent = meetingDate || "No date set";
+    });
+    
+    window.location.href = 'User profile.html';  // Make sure this path is correc
+  </script>
+
+</body>
+</html>
